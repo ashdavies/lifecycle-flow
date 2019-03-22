@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean
         ]
     )
 )
-internal class SingleLiveData<T : LifecycleCommand<*>> : MutableLiveData<T>() {
+class SingleLiveData<T : LifecycleCommand<*>> : MutableLiveData<T>() {
 
   private val pending = AtomicBoolean(false)
 
