@@ -1,5 +1,3 @@
-import sun.lwawt.macosx.CFileDialog
-
 buildscript {
   repositories {
     jcenter()
