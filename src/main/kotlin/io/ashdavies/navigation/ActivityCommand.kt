@@ -1,5 +1,5 @@
 package io.ashdavies.navigation
 
-import androidx.core.app.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 
-interface ActivityCommand : LifecycleCommand<ComponentActivity>
+interface ActivityCommand : LifecycleCommand<FragmentActivity>

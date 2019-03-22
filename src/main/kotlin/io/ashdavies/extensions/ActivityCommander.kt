@@ -1,7 +1,7 @@
 package io.ashdavies.extensions
 
-import androidx.core.app.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import io.ashdavies.lifecycle.ActivityObserver
 import io.ashdavies.navigation.ActivityCommander
 
-fun ActivityCommander.observeCommands(activity: ComponentActivity) = commands.observe(activity, ActivityObserver(activity))
+fun ActivityCommander.observeCommands(activity: FragmentActivity) = commands.observe(activity, ActivityObserver(activity))

@@ -1,9 +1,9 @@
 package io.ashdavies.testing
 
-import androidx.core.app.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import io.ashdavies.navigation.ActivityCommand
 
 internal class FakeActivityCommand : ActivityCommand {
 
-  override fun invoke(activity: ComponentActivity) = activity.finish()
+  override fun invoke(activity: FragmentActivity) = activity.finish()
 }

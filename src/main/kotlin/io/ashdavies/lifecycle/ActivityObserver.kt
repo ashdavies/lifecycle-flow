@@ -1,9 +1,9 @@
 package io.ashdavies.lifecycle
 
-import androidx.core.app.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import io.ashdavies.navigation.ActivityCommand
 
-internal class ActivityObserver(private val activity: ComponentActivity) : EventObserver<ActivityCommand>() {
+internal class ActivityObserver(private val activity: FragmentActivity) : EventObserver<ActivityCommand>() {
 
   override fun onValue(it: ActivityCommand) = it(activity)
 }

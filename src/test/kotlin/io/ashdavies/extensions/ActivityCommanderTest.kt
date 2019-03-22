@@ -1,6 +1,6 @@
 package io.ashdavies.extensions
 
-import androidx.core.app.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle.Event.ON_START
 import androidx.lifecycle.LifecycleRegistry
 import com.nhaarman.mockito_kotlin.given
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class ActivityCommanderTest {
 
-  private val activity: ComponentActivity = mock()
+  private val activity: FragmentActivity = mock()
 
   private val commander = FakeActivityCommander()
   private val registry = LifecycleRegistry(activity)
