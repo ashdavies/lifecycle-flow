@@ -33,11 +33,6 @@ android {
     targetSdkVersion 28
   }
 
-  kotlinOptions {
-    freeCompilerArgs += ["-XXLanguage:+InlineClasses"]
-    jvmTarget = JavaVersion.VERSION_1_8
-  }
-
   sourceSets {
     main.java.srcDirs 'src/main/kotlin'
     test.java.srcDirs 'src/test/kotlin'
@@ -64,3 +59,7 @@ dependencies {
   testImplementation 'org.junit.jupiter:junit-jupiter:5.4.0'
   testImplementation 'org.mockito:mockito-android:2.24.5' because '2.24.6 not available'
 }
+
+tasks
+    .withType(Javadoc)
+    .all { enabled = false }
