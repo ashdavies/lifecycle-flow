@@ -9,4 +9,4 @@
 [![](https://img.shields.io/github/last-commit/ashdavies/lifecyce.svg)](https://github.com/ashdavies/lifecyce/commits/master)
 [![](https://img.shields.io/github/issues-pr/ashdavies/lifecyce.svg)](https://github.com/ashdavies/lifecyce/pulls)
 
-**A Handful of lean navigation elements for lifecycle components**
+**Handful of lean navigation elements for lifecycle components**

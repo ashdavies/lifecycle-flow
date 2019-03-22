@@ -3,11 +3,11 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/android:api-27-alpha
+      - image: circleci/android:api-28
 
     environment:
       ANDROID_HOME: /opt/android/sdk
-      APPLICATION_ID: io.ashdavies.sample
+      APPLICATION_ID: io.ashdavies.lifecycle
 
     steps:
       - checkout

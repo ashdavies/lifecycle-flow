@@ -1,0 +1,33 @@
+package io.ashdavies.extensions
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import io.ashdavies.lifecycle.FilterOperator
+import io.ashdavies.lifecycle.MapOperator
+import io.ashdavies.lifecycle.Operator
+import io.ashdavies.lifecycle.PassthroughOperator
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T> LiveData<*>.filterIsInstance(): LiveData<T> = filter { it is T } as LiveData<T>
+
+@Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
+inline fun <T> LiveData<T?>.filterNotNull(): LiveData<T> = filter { it != null } as LiveData<T>
+
+fun <T> LiveData<T>.toMutableLiveData(): MutableLiveData<T> {
+  return if (this is MutableLiveData<T>) this
+  else transform(PassthroughOperator())
+}
+
+fun <T> LiveData<T>.filter(predicate: (T) -> Boolean): LiveData<T> = transform(FilterOperator(predicate))
+
+fun <T, R> LiveData<T>.map(mapper: (T) -> R): LiveData<R> = transform(MapOperator(mapper))
+
+private fun <T, R> LiveData<T>.transform(operator: Operator<T, R>): MediatorLiveData<R> {
+  val output = MediatorLiveData<R>()
+  output.addSource(this) {
+    operator(output, it)
+  }
+  return output
+}
+
