@@ -3,7 +3,7 @@ package io.ashdavies.navigation
 import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.then
 import io.ashdavies.extensions.test
-import io.ashdavies.lifecycle.LiveDataEvent
+import io.ashdavies.lifecycle.Event
 import io.ashdavies.navigation.ActivityCommander.Standard
 import io.ashdavies.testing.FakeActivityCommand
 import io.ashdavies.testing.InstantTaskExecutorExtension
@@ -18,7 +18,7 @@ internal class ActivityCommanderTest {
 
   @Test
   fun `should dispatch command`() {
-    val observer: Observer<LiveDataEvent<ActivityCommand>> = commander
+    val observer: Observer<Event<ActivityCommand>> = commander
         .commands
         .test()
 
@@ -26,6 +26,6 @@ internal class ActivityCommanderTest {
 
     then(observer)
         .should()
-        .onChanged(LiveDataEvent(command))
+        .onChanged(Event(command))
   }
 }

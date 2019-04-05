@@ -13,7 +13,7 @@ internal class ActivityObserverTest {
 
   @Test
   fun `should invoke activity command`() {
-    observer.onChanged(LiveDataEvent(FakeActivityCommand()))
+    observer.onChanged(Event(FakeActivityCommand()))
 
     then(activity)
         .should()

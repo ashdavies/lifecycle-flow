@@ -16,7 +16,7 @@ internal class FragmentObserverTest {
 
   @Test
   fun `should invoke fragment command`() {
-    observer.onChanged(LiveDataEvent(FakeFragmentCommand(context)))
+    observer.onChanged(Event(FakeFragmentCommand(context)))
 
     then(fragment)
         .should()

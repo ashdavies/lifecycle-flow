@@ -30,7 +30,7 @@ internal class FragmentCommanderTest {
 
   @Test
   fun `should observe commands`() {
-    commander.observeCommands(fragment)
+    fragment.observe(commander)
 
     registry.handleLifecycleEvent(Lifecycle.Event.ON_START)
     commander.dispatch(FakeFragmentCommand(context))

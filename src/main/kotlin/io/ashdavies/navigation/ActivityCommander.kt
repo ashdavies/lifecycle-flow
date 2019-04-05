@@ -3,21 +3,21 @@ package io.ashdavies.navigation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.ashdavies.extensions.mutableLiveDataOf
-import io.ashdavies.lifecycle.LiveDataEvent
+import io.ashdavies.lifecycle.Event
 
 interface ActivityCommander {
 
-  val commands: LiveData<LiveDataEvent<ActivityCommand>>
+  val commands: LiveData<Event<ActivityCommand>>
 
   fun dispatch(command: ActivityCommand)
 
   class Standard : ActivityCommander {
 
-    private val _commands: MutableLiveData<LiveDataEvent<ActivityCommand>> = mutableLiveDataOf()
-    override val commands: LiveData<LiveDataEvent<ActivityCommand>> = _commands
+    private val _commands: MutableLiveData<Event<ActivityCommand>> = mutableLiveDataOf()
+    override val commands: LiveData<Event<ActivityCommand>> = _commands
 
     override fun dispatch(command: ActivityCommand) {
-      _commands.value = LiveDataEvent(command)
+      _commands.value = Event(command)
     }
   }
 }

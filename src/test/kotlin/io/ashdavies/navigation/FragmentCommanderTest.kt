@@ -4,7 +4,7 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import io.ashdavies.extensions.test
-import io.ashdavies.lifecycle.LiveDataEvent
+import io.ashdavies.lifecycle.Event
 import io.ashdavies.navigation.FragmentCommander.Standard
 import io.ashdavies.testing.FakeFragmentCommand
 import io.ashdavies.testing.InstantTaskExecutorExtension
@@ -19,7 +19,7 @@ internal class FragmentCommanderTest {
 
   @Test
   fun `should dispatch command`() {
-    val observer: Observer<LiveDataEvent<FragmentCommand>> = commander
+    val observer: Observer<Event<FragmentCommand>> = commander
         .commands
         .test()
 
@@ -27,6 +27,6 @@ internal class FragmentCommanderTest {
 
     then(observer)
         .should()
-        .onChanged(LiveDataEvent(command))
+        .onChanged(Event(command))
   }
 }

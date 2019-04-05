@@ -1,6 +1,6 @@
 package io.ashdavies.lifecycle
 
-data class LiveDataEvent<out T>(private val _content: T) {
+data class Event<out T>(private val _content: T) {
 
   var handled = false
     private set

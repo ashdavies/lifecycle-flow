@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class LiveDataEventTest {
 
-  private val event: LiveDataEvent<Int> = LiveDataEvent(42)
+  private val event: Event<Int> = Event(42)
 
   @Test
   fun `should get content when unhandled`() {

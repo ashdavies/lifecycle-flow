@@ -28,7 +28,7 @@ internal class ActivityCommanderTest {
 
   @Test
   fun `should observe commands`() {
-    commander.observeCommands(activity)
+    activity.observe(commander)
 
     registry.handleLifecycleEvent(ON_START)
     commander.dispatch(FakeActivityCommand())

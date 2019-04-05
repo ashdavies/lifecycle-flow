@@ -3,11 +3,11 @@ package io.ashdavies.navigation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.ashdavies.extensions.mutableLiveDataOf
-import io.ashdavies.lifecycle.LiveDataEvent
+import io.ashdavies.lifecycle.Event
 
 interface FragmentCommander {
 
-  val commands: LiveData<LiveDataEvent<FragmentCommand>>
+  val commands: LiveData<Event<FragmentCommand>>
 
   fun dispatch(command: ActivityCommand)
 
@@ -15,15 +15,15 @@ interface FragmentCommander {
 
   class Standard : FragmentCommander {
 
-    private val _commands: MutableLiveData<LiveDataEvent<FragmentCommand>> = mutableLiveDataOf()
-    override val commands: LiveData<LiveDataEvent<FragmentCommand>> = _commands
+    private val _commands: MutableLiveData<Event<FragmentCommand>> = mutableLiveDataOf()
+    override val commands: LiveData<Event<FragmentCommand>> = _commands
 
     override fun dispatch(command: ActivityCommand) {
-      _commands.value = LiveDataEvent(CompatCommand(command))
+      _commands.value = Event(CompatCommand(command))
     }
 
     override fun dispatch(command: FragmentCommand) {
-      _commands.value = LiveDataEvent(command)
+      _commands.value = Event(command)
     }
   }
 }
