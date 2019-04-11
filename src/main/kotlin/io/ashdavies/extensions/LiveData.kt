@@ -23,6 +23,8 @@ fun <T> LiveData<T>.filter(predicate: (T) -> Boolean): LiveData<T> = transform(F
 
 fun <T, R> LiveData<T>.map(mapper: (T) -> R): LiveData<R> = transform(MapOperator(mapper))
 
+fun <T> LiveData<T>.requireValue(): T = value ?: throw IllegalStateException("LiveData $this not does not contain a value")
+
 private fun <T, R> LiveData<T>.transform(operator: Operator<T, R>): MediatorLiveData<R> {
   val output = MediatorLiveData<R>()
   output.addSource(this) {

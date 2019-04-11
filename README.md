@@ -1,4 +1,4 @@
-# Lifecycle Navigation
+# Lifecycle Flow
 
 [![](https://img.shields.io/circleci/project/github/ashdavies/lifecycle-navigation.svg)](https://circleci.com/gh/ashdavies/lifecycle-navigation)
 [![](https://img.shields.io/codacy/coverage/03ae86d9ce934421879bc407aa157732.svg)](https://app.codacy.com/project/ash.davies/lifecycle-navigation/dashboard)

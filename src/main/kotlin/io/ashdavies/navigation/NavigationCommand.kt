@@ -1,16 +1,13 @@
 package io.ashdavies.navigation
 
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import io.ashdavies.extensions.requireView
 
-abstract class NavigationCommand : FragmentCommand {
+data class NavigationCommand(@IdRes private val resId: Int) : FragmentCommand {
 
-  private val Fragment.controller: NavController
-    get() = Navigation.findNavController(requireView())
-
-  override fun invoke(fragment: Fragment) = invoke(fragment.controller)
-
-  abstract fun invoke(controller: NavController)
+  override fun invoke(fragment: Fragment) = Navigation
+      .findNavController(fragment.requireView())
+      .navigate(resId)
 }

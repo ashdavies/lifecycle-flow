@@ -1,31 +1,28 @@
 package io.ashdavies.navigation
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import io.ashdavies.lifecycle.R
-import io.ashdavies.testing.FakeNavigationCommand
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.RETURNS_DEEP_STUBS
 
 internal class NavigationCommandTest {
 
+  private val fragment: Fragment = mock(defaultAnswer = RETURNS_DEEP_STUBS)
   private val controller: NavController = mock()
-  private val fragment: Fragment = mock()
-  private val view: View = mock()
 
   @BeforeEach
   fun setUp() {
-    given(fragment.view).willReturn(view)
-    given(view.getTag(R.id.nav_controller_view_tag)).willReturn(controller)
+    given(fragment.view?.getTag(R.id.nav_controller_view_tag)).willReturn(controller)
   }
 
   @Test
   fun `should invoke navigation command`() {
-    val command: FragmentCommand = FakeNavigationCommand()
+    val command: FragmentCommand = NavigationCommand(-1)
 
     command(fragment)
 
