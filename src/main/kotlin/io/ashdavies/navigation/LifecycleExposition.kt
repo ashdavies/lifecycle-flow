@@ -6,5 +6,5 @@ import io.ashdavies.lifecycle.Event
 
 interface LifecycleExposition<T : LifecycleOwner> {
 
-  val events: LiveData<Event<LifecycleCommand<T>>>
+  val commands: LiveData<Event<LifecycleCommand<T>>>
 }

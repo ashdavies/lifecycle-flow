@@ -8,9 +8,9 @@ import io.ashdavies.navigation.ActivityCommander
 
 internal class FakeActivityCommander : ActivityCommander {
 
-  override val events: MutableLiveData<Event<ActivityCommand>> = mutableLiveDataOf()
+  override val commands: MutableLiveData<Event<ActivityCommand>> = mutableLiveDataOf()
 
   override fun dispatch(command: ActivityCommand) {
-    events.value = Event(command)
+    commands.value = Event(command)
   }
 }

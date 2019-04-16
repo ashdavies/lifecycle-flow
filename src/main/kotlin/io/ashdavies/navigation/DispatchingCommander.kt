@@ -8,10 +8,10 @@ import io.ashdavies.lifecycle.Event
 
 internal class DispatchingCommander<T : LifecycleOwner> : LifecycleCommander<T> {
 
-  private val _events: MutableLiveData<Event<LifecycleCommand<T>>> = mutableLiveDataOf()
-  override val events: LiveData<Event<LifecycleCommand<T>>> = _events
+  private val _commands: MutableLiveData<Event<LifecycleCommand<T>>> = mutableLiveDataOf()
+  override val commands: LiveData<Event<LifecycleCommand<T>>> = _commands
 
   override fun dispatch(command: LifecycleCommand<T>) {
-    _events.value = Event(command)
+    _commands.value = Event(command)
   }
 }

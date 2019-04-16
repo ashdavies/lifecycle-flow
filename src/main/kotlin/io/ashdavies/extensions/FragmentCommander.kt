@@ -10,4 +10,4 @@ import io.ashdavies.navigation.FragmentCommander
 
 fun FragmentCommander.dispatch(command: ActivityCommand) = dispatch(CompatCommand(command))
 
-fun FragmentCommander.observe(owner: LifecycleOwner, observer: Observer<Event<FragmentCommand>>) = events.observe(owner, observer)
+fun FragmentCommander.observe(owner: LifecycleOwner, observer: Observer<Event<FragmentCommand>>) = commands.observe(owner, observer)
