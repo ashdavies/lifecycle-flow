@@ -1,15 +1,18 @@
 package io.ashdavies.navigation
 
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.then
-import io.ashdavies.extensions.test
+import io.ashdavies.extensions.await
 import io.ashdavies.lifecycle.Event
 import io.ashdavies.testing.FakeFragmentCommand
 import io.ashdavies.testing.InstantTaskExecutorExtension
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
+@ExperimentalCoroutinesApi
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class FragmentCommanderTest {
 
@@ -17,15 +20,13 @@ internal class FragmentCommanderTest {
   private val command: FragmentCommand = FakeFragmentCommand(mock())
 
   @Test
-  fun `should dispatch command`() {
-    val observer: Observer<Event<FragmentCommand>> = commander
-        .commands
-        .test()
-
+  fun `should dispatch command`() = runBlocking<Unit> {
     commander.dispatch(command)
 
-    then(observer)
-        .should()
-        .onChanged(Event(command))
+    val actual: Event<LifecycleCommand<Fragment>> = commander
+        .commands
+        .await()
+
+    assertThat(actual).isEqualTo(Event(command))
   }
 }

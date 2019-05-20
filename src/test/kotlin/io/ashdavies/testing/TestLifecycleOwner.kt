@@ -7,12 +7,18 @@ import androidx.lifecycle.Lifecycle.Event.ON_PAUSE
 import androidx.lifecycle.Lifecycle.Event.ON_RESUME
 import androidx.lifecycle.Lifecycle.Event.ON_START
 import androidx.lifecycle.Lifecycle.Event.ON_STOP
+import androidx.lifecycle.Lifecycle.State
+import androidx.lifecycle.Lifecycle.State.INITIALIZED
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 
-internal class TestLifecycleOwner : LifecycleOwner {
+internal class TestLifecycleOwner(state: State = INITIALIZED) : LifecycleOwner {
 
   private val registry = LifecycleRegistry(this)
+
+  init {
+    registry.markState(state)
+  }
 
   override fun getLifecycle(): Lifecycle = registry
 
