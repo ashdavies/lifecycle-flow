@@ -6,9 +6,9 @@ import io.ashdavies.lifecycle.MapInstanceOperator
 import io.ashdavies.lifecycle.MapNotNullOperator
 import io.ashdavies.lifecycle.MapOperator
 
-inline fun <reified T> LiveData<*>.filterIsInstance(): LiveData<T> = filterIsInstance(T::class.java)
+inline fun <reified T> LiveData<Any>.filterIsInstance(): LiveData<T> = filterIsInstance(T::class.java)
 
-fun <T> LiveData<*>.filterIsInstance(kls: Class<T>): LiveData<T> = mediatorLiveData(this, MapInstanceOperator(kls))
+fun <T> LiveData<Any>.filterIsInstance(kls: Class<T>): LiveData<T> = mediatorLiveData(this, MapInstanceOperator(kls))
 
 fun <T> LiveData<T?>.filterNotNull(): LiveData<T> = mediatorLiveData(this, MapNotNullOperator())
 

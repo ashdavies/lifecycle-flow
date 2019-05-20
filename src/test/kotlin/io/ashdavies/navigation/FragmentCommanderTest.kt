@@ -5,7 +5,6 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import io.ashdavies.extensions.test
 import io.ashdavies.lifecycle.Event
-import io.ashdavies.navigation.FragmentCommander.Standard
 import io.ashdavies.testing.FakeFragmentCommand
 import io.ashdavies.testing.InstantTaskExecutorExtension
 import org.junit.jupiter.api.Test
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class FragmentCommanderTest {
 
-  private val commander: FragmentCommander = Standard()
+  private val commander: FragmentCommander = DispatchingCommander()
   private val command: FragmentCommand = FakeFragmentCommand(mock())
 
   @Test

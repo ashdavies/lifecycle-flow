@@ -2,12 +2,12 @@ package io.ashdavies.lifecycle
 
 import androidx.lifecycle.MediatorLiveData
 
-internal class MapInstanceOperator<T, R>(private val kls: Class<R>) : Operator<T, R> {
+internal class MapInstanceOperator<T>(private val kls: Class<T>) : Operator<Any, T> {
 
   @Suppress("UNCHECKED_CAST")
-  override fun invoke(source: MediatorLiveData<R>, value: T) {
+  override fun invoke(source: MediatorLiveData<T>, value: Any) {
     if (kls.isInstance(value)) {
-      source.value = value as R
+      source.value = value as T
     }
   }
 }

@@ -9,19 +9,20 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class MapInstanceOperatorTest {
 
-  private val operator = MapInstanceOperator<Number, Int>(Int::class.java)
-  private val output = MediatorLiveData<Int>()
+  private val operator: Operator<Any, String> = MapInstanceOperator(String::class.java)
+
+  private val output = MediatorLiveData<String>()
 
   @Test
-  fun `should map int value`() {
-    operator(output, 42)
+  fun `should map string value`() {
+    operator(output, "42")
 
-    assertThat(output.value).isEqualTo(42)
+    assertThat(output.value).isEqualTo("42")
   }
 
   @Test
-  fun `should not map double value`() {
-    operator(output, 42.0)
+  fun `should not map int value`() {
+    operator(output, 42)
 
     assertThat(output.value).isNull()
   }
