@@ -2,15 +2,15 @@ package io.ashdavies.architecture
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.ashdavies.extensions.mutableLiveDataOf
+import io.ashdavies.extensions.mutableLiveData
 import io.ashdavies.extensions.requireValue
 
 class StateMachinery<T>(initial: T) : StateMachine<T> {
 
-  private val _state: MutableLiveData<Result<T>> = mutableLiveDataOf()
+  private val _state: MutableLiveData<Result<T>> = mutableLiveData()
   override val state: LiveData<Result<T>> = _state
 
-  private val _loading: MutableLiveData<Boolean> = mutableLiveDataOf()
+  private val _loading: MutableLiveData<Boolean> = mutableLiveData()
   override val loading: LiveData<Boolean> = _loading
 
   init {

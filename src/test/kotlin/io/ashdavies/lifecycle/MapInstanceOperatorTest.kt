@@ -1,6 +1,6 @@
 package io.ashdavies.lifecycle
 
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import io.ashdavies.testing.InstantTaskExecutorExtension
 import org.junit.jupiter.api.Test
@@ -11,18 +11,22 @@ internal class MapInstanceOperatorTest {
 
   private val operator: Operator<Any, String> = MapInstanceOperator(String::class.java)
 
-  private val output = MediatorLiveData<String>()
+  private val output = MutableLiveData<String>()
 
   @Test
   fun `should map string value`() {
-    operator(output, "42")
+    val scope: LiveDataScope<String> = MutableLiveDataScope(output)
+
+    operator(scope, "42")
 
     assertThat(output.value).isEqualTo("42")
   }
 
   @Test
   fun `should not map int value`() {
-    operator(output, 42)
+    val scope: LiveDataScope<String> = MutableLiveDataScope(output)
+
+    operator(scope, 42)
 
     assertThat(output.value).isNull()
   }

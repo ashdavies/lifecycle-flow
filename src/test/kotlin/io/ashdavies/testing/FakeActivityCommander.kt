@@ -1,16 +1,18 @@
 package io.ashdavies.testing
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.ashdavies.extensions.mutableLiveDataOf
+import io.ashdavies.extensions.mutableLiveData
 import io.ashdavies.lifecycle.Event
 import io.ashdavies.navigation.ActivityCommand
 import io.ashdavies.navigation.ActivityCommander
 
 internal class FakeActivityCommander : ActivityCommander {
 
-  override val commands: MutableLiveData<Event<ActivityCommand>> = mutableLiveDataOf()
+  private val _commands: MutableLiveData<Event<ActivityCommand>> = mutableLiveData()
+  override val commands: LiveData<Event<ActivityCommand>> = _commands
 
   override fun dispatch(command: ActivityCommand) {
-    commands.value = Event(command)
+    _commands.value = Event(command)
   }
 }
