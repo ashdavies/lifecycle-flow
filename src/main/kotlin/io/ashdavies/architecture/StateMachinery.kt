@@ -17,13 +17,19 @@ class StateMachinery<T>(initial: T) : StateMachine<T> {
     _state.value = Result.success(initial)
   }
 
+  fun action(block: (Result<T>) -> Result<T>) {
+    runLoading {
+      block(_state.requireValue())
+    }
+  }
+
   override suspend fun action(block: suspend (Result<T>) -> T) = runLoading {
     runCatching {
       block(_state.requireValue())
     }
   }
 
-  private suspend fun runLoading(block: suspend () -> Result<T>) {
+  private inline fun <S> S.runLoading(block: S.() -> Result<T>) {
     _loading.value = true
     _state.value = block()
     _loading.value = false
