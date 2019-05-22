@@ -1,4 +1,4 @@
-package io.ashdavies.architecture
+package io.ashdavies.state
 
 interface StateMachine<T> : StateExposition<T> {
 

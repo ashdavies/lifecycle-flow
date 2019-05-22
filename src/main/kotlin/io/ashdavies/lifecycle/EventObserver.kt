@@ -1,6 +1,7 @@
 package io.ashdavies.lifecycle
 
 import androidx.lifecycle.Observer
+import io.ashdavies.architecture.Event
 
 internal abstract class EventObserver<T> : Observer<Event<T>> {
 

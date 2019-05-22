@@ -1,4 +1,4 @@
-package io.ashdavies.lifecycle
+package io.ashdavies.architecture
 
 data class Event<out T>(private val _content: T) {
 
