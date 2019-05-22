@@ -12,7 +12,7 @@ class StateMachinery<T>(initial: T) : StateMachine<T> {
   private val _state: MutableLiveData<Result<T>> = mutableLiveData()
   override val state: LiveData<Result<T>> = _state
 
-  private val _loading: MutableLiveData<Boolean> = mutableLiveData()
+  private val _loading: MutableLiveData<Boolean> = mutableLiveData(false)
   override val loading: LiveData<Boolean> = _loading
 
   init {

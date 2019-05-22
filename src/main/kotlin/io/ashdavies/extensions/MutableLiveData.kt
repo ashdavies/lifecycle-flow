@@ -5,6 +5,8 @@ import io.ashdavies.lifecycle.MutableLiveDataScope
 
 internal fun <T> mutableLiveData(): MutableLiveData<T> = MutableLiveData()
 
+internal fun <T> mutableLiveData(value: T): MutableLiveData<T> = mutableLiveData { emit(value) }
+
 internal fun <T> mutableLiveData(block: MutableLiveDataScope<T>.() -> Unit): MutableLiveData<T> {
   val output = MutableLiveData<T>()
   val scope = MutableLiveDataScope(output)

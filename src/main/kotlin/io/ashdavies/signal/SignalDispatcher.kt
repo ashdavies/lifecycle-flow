@@ -4,10 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
+import io.ashdavies.extensions.mutableLiveData
 
-class SignalDispatcher<T : Signal> : SignalStore<T> {
+class SignalDispatcher<T : Signal> private constructor(private val _signals: MutableLiveData<Event<T>>) : SignalStore<T> {
 
-  private val _signals: MutableLiveData<Event<T>> = MutableLiveData()
+  constructor() : this(mutableLiveData())
+
+  constructor(value: T) : this(mutableLiveData(Event(value)))
+
   override val signals: LiveData<Event<T>> = _signals
 
   override fun signal(signal: T) {
