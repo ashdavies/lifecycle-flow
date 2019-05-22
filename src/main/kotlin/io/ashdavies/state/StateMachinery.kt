@@ -2,9 +2,11 @@ package io.ashdavies.state
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.ashdavies.annotation.ExperimentalLifecycleApi
 import io.ashdavies.extensions.mutableLiveData
 import io.ashdavies.extensions.requireValue
 
+@ExperimentalLifecycleApi
 class StateMachinery<T>(initial: T) : StateMachine<T> {
 
   private val _state: MutableLiveData<Result<T>> = mutableLiveData()
