@@ -1,5 +1,8 @@
 package io.ashdavies.annotation
 
-@Retention(value = AnnotationRetention.BINARY)
-@Experimental(level = Experimental.Level.WARNING)
-internal annotation class ExperimentalLifecycleApi
+import kotlin.Experimental.Level.WARNING
+import kotlin.annotation.AnnotationRetention.BINARY
+
+@Retention(value = BINARY)
+@Experimental(level = WARNING)
+annotation class ExperimentalLifecycleApi
