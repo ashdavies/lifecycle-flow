@@ -2,10 +2,13 @@ package io.ashdavies.extensions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import io.ashdavies.lifecycle.FilterOperator
 import io.ashdavies.lifecycle.LiveDataScope
-import io.ashdavies.lifecycle.MapInstanceOperator
-import io.ashdavies.lifecycle.MapNotNullOperator
+import io.ashdavies.operator.DistinctOperator
+import io.ashdavies.operator.FilterOperator
+import io.ashdavies.operator.MapInstanceOperator
+import io.ashdavies.operator.MapNotNullOperator
+
+fun <T> LiveData<T>.distinctUntilChanged(): LiveData<T> = mediatorLiveData(this, DistinctOperator())
 
 inline fun <reified T> LiveData<Any>.filterIsInstance(): LiveData<T> = filterIsInstance(T::class.java)
 

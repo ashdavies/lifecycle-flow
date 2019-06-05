@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import io.ashdavies.extensions.assertTimeout
 import io.ashdavies.extensions.await
+import io.ashdavies.operator.FilterOperator
+import io.ashdavies.operator.Operator
 import io.ashdavies.testing.InstantTaskExecutorExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
