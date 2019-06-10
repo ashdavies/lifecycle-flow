@@ -1,10 +1,9 @@
 package io.ashdavies.signal
 
-import androidx.lifecycle.Observer
 import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
 import io.ashdavies.testing.InstantTaskExecutorExtension
-import io.ashdavies.testing.extensions.expect
+import io.ashdavies.testing.TestObserver
 import io.ashdavies.testing.extensions.test
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -16,7 +15,7 @@ internal class SignalDispatcherTest {
 
   @Test
   fun `should emit signal`() {
-    val observer: Observer<Event<TestSignal>> = store
+    val observer: TestObserver<Event<TestSignal>> = store
         .signals
         .test()
 

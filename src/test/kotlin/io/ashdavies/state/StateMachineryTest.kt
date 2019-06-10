@@ -1,46 +1,34 @@
 package io.ashdavies.state
 
-import androidx.lifecycle.Observer
 import io.ashdavies.annotation.ExperimentalLifecycleApi
 import io.ashdavies.testing.InstantTaskExecutorExtension
-import io.ashdavies.testing.extensions.expect
+import io.ashdavies.testing.TestObserver
+import io.ashdavies.testing.UnconfinedDispatcherExtension
 import io.ashdavies.testing.extensions.test
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.extension.Extensions
 import kotlin.LazyThreadSafetyMode.NONE
 
+@Extensions(
+    ExtendWith(InstantTaskExecutorExtension::class),
+    ExtendWith(UnconfinedDispatcherExtension::class)
+)
 @ExperimentalLifecycleApi
-@ExtendWith(InstantTaskExecutorExtension::class)
 internal class StateMachineryTest {
 
   private val machine: StateMachine<State> by lazy<StateMachine<State>>(NONE) { StateMachinery(State.Started) }
 
-  private val state: Observer<Result<State>>
+  private val state: TestObserver<Result<State>>
     get() = machine
         .state
         .test()
 
-  private val loading: Observer<Boolean>
+  private val loading: TestObserver<Boolean>
     get() = machine
         .loading
         .test()
-
-  @BeforeEach
-  fun setUp() {
-    Dispatchers.setMain(Unconfined)
-  }
-
-  @AfterEach
-  fun tearDown() {
-    Dispatchers.resetMain()
-  }
 
   @Test
   fun `should start with provided initial state`() {
@@ -54,7 +42,7 @@ internal class StateMachineryTest {
 
   @Test
   fun `should emit state result`() = runBlocking<Unit> {
-    val state: Observer<Result<State>> = state
+    val state: TestObserver<Result<State>> = state
 
     machine.action { State.Finished }
 
@@ -77,18 +65,21 @@ internal class StateMachineryTest {
   @Test
   fun `should catch exception result`() = runBlocking {
     val exception: Exception = IllegalStateException()
-    val state: Observer<Result<State>> = state
+    val state: TestObserver<Result<State>> = state
 
     machine.action {
       throw exception
     }
 
-    state.expect(Result.failure(exception))
+    state.expect(
+        Result.success(State.Started),
+        Result.failure(exception)
+    )
   }
 
   @Test
   fun `should emit loading state following action`() = runBlocking {
-    val loading: Observer<Boolean> = loading
+    val loading: TestObserver<Boolean> = loading
 
     machine.action { State.Finished }
 

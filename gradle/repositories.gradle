@@ -15,7 +15,6 @@ repositories {
     content {
       includeGroup 'de.mannodermaus.gradle.plugins'
       includeGroup 'org.jetbrains.trove4j'
-      includeGroup 'org.mockito'
 
       excludeGroupByRegex 'androidx.*'
       excludeGroupByRegex 'com\\.android.*'

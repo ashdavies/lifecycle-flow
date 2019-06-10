@@ -1,10 +1,9 @@
 package io.ashdavies.lifecycle
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import io.ashdavies.extensions.mutableLiveData
 import io.ashdavies.testing.InstantTaskExecutorExtension
-import io.ashdavies.testing.extensions.expect
+import io.ashdavies.testing.TestObserver
 import io.ashdavies.testing.extensions.test
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -17,7 +16,7 @@ internal class MutableLiveDataScopeTest {
 
   @Test
   fun `should emit values`() {
-    val observer: Observer<Int> = source.test()
+    val observer: TestObserver<Int> = source.test()
 
     scope.emit(1, 2, 3)
 

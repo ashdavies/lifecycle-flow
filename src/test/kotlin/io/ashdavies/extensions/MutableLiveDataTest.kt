@@ -1,9 +1,8 @@
 package io.ashdavies.extensions
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import io.ashdavies.testing.InstantTaskExecutorExtension
-import io.ashdavies.testing.extensions.expect
+import io.ashdavies.testing.TestObserver
 import io.ashdavies.testing.extensions.test
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -15,7 +14,7 @@ internal class MutableLiveDataTest {
 
   @Test
   fun `should get scope from live data`() {
-    val observer: Observer<Int> = source.test()
+    val observer: TestObserver<Int> = source.test()
 
     source.emit(42)
 
@@ -24,7 +23,7 @@ internal class MutableLiveDataTest {
 
   @Test
   fun `should operate within live data scope`() {
-    val observer: Observer<Int> = source.test()
+    val observer: TestObserver<Int> = source.test()
 
     source.emit(42)
 
@@ -33,7 +32,7 @@ internal class MutableLiveDataTest {
 
   @Test
   fun `should emit sequence values`() {
-    val observer: Observer<Int> = source.test()
+    val observer: TestObserver<Int> = source.test()
 
     source.emit(1, 2, 3)
 
