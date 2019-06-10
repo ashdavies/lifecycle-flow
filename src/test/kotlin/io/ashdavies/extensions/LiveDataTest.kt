@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import io.ashdavies.testing.InstantTaskExecutorExtension
 import io.ashdavies.testing.TestObserver
-import io.ashdavies.testing.extensions.test
+import io.ashdavies.testing.test
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 

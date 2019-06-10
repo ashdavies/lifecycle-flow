@@ -1,8 +1,8 @@
 package io.ashdavies.operator
 
+import io.ashdavies.extensions.invoke
 import io.ashdavies.testing.InstantTaskExecutorExtension
 import io.ashdavies.testing.TestLiveDataScope
-import io.ashdavies.testing.extensions.invoke
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 

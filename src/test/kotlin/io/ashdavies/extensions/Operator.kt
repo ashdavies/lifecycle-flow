@@ -1,4 +1,4 @@
-package io.ashdavies.testing.extensions
+package io.ashdavies.extensions
 
 import io.ashdavies.lifecycle.LiveDataScope
 import io.ashdavies.operator.Operator

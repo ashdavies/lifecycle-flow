@@ -4,7 +4,7 @@ import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
 import io.ashdavies.testing.InstantTaskExecutorExtension
 import io.ashdavies.testing.TestObserver
-import io.ashdavies.testing.extensions.test
+import io.ashdavies.testing.test
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
