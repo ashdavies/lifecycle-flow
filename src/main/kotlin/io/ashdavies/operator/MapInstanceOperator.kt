@@ -2,12 +2,12 @@ package io.ashdavies.operator
 
 import io.ashdavies.lifecycle.LiveDataScope
 
-internal class MapInstanceOperator<T>(private val kls: Class<T>) : Operator<Any, T> {
+internal class MapInstanceOperator<T : Any?, R>(private val kls: Class<R>) : Operator<T, R> {
 
   @Suppress("UNCHECKED_CAST")
-  override fun invoke(scope: LiveDataScope<T>, value: Any) {
+  override fun invoke(scope: LiveDataScope<R>, value: T) {
     if (kls.isInstance(value)) {
-      scope.emit(value as T)
+      scope.emit(value as R)
     }
   }
 }

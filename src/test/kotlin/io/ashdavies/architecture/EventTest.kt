@@ -1,10 +1,10 @@
-package io.ashdavies.lifecycle
+package io.ashdavies.architecture
 
 import com.google.common.truth.Truth.assertThat
 import io.ashdavies.architecture.Event
 import org.junit.jupiter.api.Test
 
-internal class LiveDataEventTest {
+internal class EventTest {
 
   private val event: Event<Int> = Event(42)
 

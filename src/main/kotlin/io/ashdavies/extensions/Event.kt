@@ -1,11 +1,9 @@
 package io.ashdavies.extensions
 
 import io.ashdavies.architecture.Event
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@ExperimentalContracts
 inline fun <R, T> Event<T>.fold(
     onContent: (T) -> R,
     onHandled: () -> R
@@ -21,19 +19,6 @@ inline fun <R, T> Event<T>.fold(
   }
 }
 
-/*@ExperimentalContracts
-inline fun <T, R> Event<T>.map(block: (T) -> R): Event<R> {
-  contract {
-    callsInPlace(block, InvocationKind.AT_MOST_ONCE)
-  }
-
-  return when (val it: T? = content) {
-    null -> Event<R>(null)
-    else -> Event(block(it))
-  }
-}*/
-
-@ExperimentalContracts
 inline fun <T> Event<T>.onContent(block: (T) -> Unit): Event<T> {
   contract {
     callsInPlace(block, InvocationKind.AT_MOST_ONCE)
@@ -43,7 +28,6 @@ inline fun <T> Event<T>.onContent(block: (T) -> Unit): Event<T> {
   return this
 }
 
-@ExperimentalContracts
 inline fun <T> Event<T>.onHandled(block: () -> Unit): Event<T> {
   contract {
     callsInPlace(block, InvocationKind.AT_MOST_ONCE)

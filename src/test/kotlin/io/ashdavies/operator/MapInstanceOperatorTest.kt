@@ -1,18 +1,16 @@
-package io.ashdavies.lifecycle
+package io.ashdavies.operator
 
 import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import io.ashdavies.extensions.assertTimeout
-import io.ashdavies.extensions.await
-import io.ashdavies.operator.MapInstanceOperator
-import io.ashdavies.operator.Operator
+import io.ashdavies.lifecycle.LiveDataScope
+import io.ashdavies.lifecycle.MutableLiveDataScope
 import io.ashdavies.testing.InstantTaskExecutorExtension
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import io.ashdavies.testing.extensions.await
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExperimentalCoroutinesApi
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class MapInstanceOperatorTest {
 

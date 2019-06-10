@@ -8,9 +8,9 @@ import io.ashdavies.extensions.mutableLiveData
 
 class SignalDispatcher<T : Signal> private constructor(private val _signals: MutableLiveData<Event<T>>) : SignalStore<T> {
 
-  constructor() : this(mutableLiveData())
-
   constructor(value: T) : this(mutableLiveData(Event(value)))
+
+  constructor() : this(mutableLiveData())
 
   override val signals: LiveData<Event<T>> = _signals
 

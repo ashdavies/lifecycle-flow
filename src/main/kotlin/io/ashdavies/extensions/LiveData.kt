@@ -10,13 +10,15 @@ import io.ashdavies.operator.MapNotNullOperator
 
 fun <T> LiveData<T>.distinctUntilChanged(): LiveData<T> = mediatorLiveData(this, DistinctOperator())
 
-inline fun <reified T> LiveData<Any>.filterIsInstance(): LiveData<T> = filterIsInstance(T::class.java)
+inline fun <reified T> LiveData<*>.filterIsInstance(): LiveData<T> = filterIsInstance(T::class.java)
 
-fun <T> LiveData<Any>.filterIsInstance(kls: Class<T>): LiveData<T> = mediatorLiveData(this, MapInstanceOperator(kls))
+fun <T> LiveData<*>.filterIsInstance(kls: Class<T>): LiveData<T> = mediatorLiveData(this, MapInstanceOperator(kls))
 
 fun <T> LiveData<T?>.filterNotNull(): LiveData<T> = mediatorLiveData(this, MapNotNullOperator())
 
 fun <T> LiveData<T>.filter(predicate: (T) -> Boolean): LiveData<T> = mediatorLiveData(this, FilterOperator(predicate))
+
+fun <T> liveData(value: T): LiveData<T> = mutableLiveData(value)
 
 fun <T> liveData(block: LiveDataScope<T>.() -> Unit): LiveData<T> = mutableLiveData(block)
 
@@ -24,4 +26,4 @@ fun <T, R> LiveData<T>.map(mapper: (T) -> R): LiveData<R> = Transformations.map(
 
 fun <T, R> LiveData<T>.switchMap(mapper: (T) -> LiveData<R>): LiveData<R> = Transformations.switchMap(this, mapper)
 
-fun <T> LiveData<T>.requireValue(): T = value ?: throw IllegalStateException("LiveData $this not does not contain a value")
+fun <T> LiveData<T>.requireValue(): T = value ?: throw IllegalStateException("LiveData $this does not contain a value")
