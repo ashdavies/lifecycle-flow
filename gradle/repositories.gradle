@@ -6,6 +6,7 @@ repositories {
       includeGroupByRegex 'androidx.*'
       includeGroupByRegex 'com\\.android.*'
       includeGroupByRegex 'com\\.google.*'
+      includeGroupByRegex 'zipflinger.*'
     }
   }
 
