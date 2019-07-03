@@ -10,17 +10,19 @@ import io.ashdavies.state.StateReducer
 import kotlinx.coroutines.launch
 
 @ExperimentalLifecycleApi
-abstract class StatefulViewModel<S, T : Signal>(initial: S) :
-    SignalStore<T> by SignalDispatcher<T>(),
+abstract class StatefulViewModel<S, T : Signal>(
+    initial: S,
+    reducer: StateReducer<S, T>
+) : SignalStore<T> by SignalDispatcher<T>(),
     StateMachine<S> by StateMachinery(initial),
     ScopedViewModel() {
 
-  protected abstract val reducer: StateReducer<S, T>
+  private val _reducer: StateReducer<S, T> = reducer
 
   fun reduce(value: T) {
     ImmediateScope.launch {
       action {
-        reducer(it.getOrThrow(), value)
+        _reducer(it.getOrThrow(), value)
       }
     }
   }

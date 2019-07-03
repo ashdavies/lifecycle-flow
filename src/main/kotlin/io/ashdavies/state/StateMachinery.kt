@@ -3,6 +3,7 @@ package io.ashdavies.state
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.ashdavies.annotation.ExperimentalLifecycleApi
+import io.ashdavies.architecture.Action
 import io.ashdavies.extensions.mutableLiveData
 import io.ashdavies.extensions.requireValue
 
@@ -19,9 +20,9 @@ class StateMachinery<T>(initial: T) : StateMachine<T> {
     _state.value = Result.success(initial)
   }
 
-  override suspend fun action(block: suspend (Result<T>) -> T) = runLoading {
+  override suspend fun action(action: Action<T>) = runLoading {
     runCatching {
-      block(_state.requireValue())
+      action(_state.requireValue())
     }
   }
 
