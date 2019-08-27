@@ -1,3 +1,6 @@
 package io.ashdavies.state
 
-typealias StateReducer<S, T> = (state: S, signal: T) -> S
+import io.ashdavies.architecture.Signal
+import io.ashdavies.architecture.State
+
+interface StateReducer<S : State, T : Signal> : (S, T) -> S
