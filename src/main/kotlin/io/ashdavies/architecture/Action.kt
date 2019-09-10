@@ -1,3 +1,6 @@
 package io.ashdavies.architecture
 
-typealias Action<T> = suspend (Result<T>) -> T
+interface Action<T> {
+
+  suspend operator fun invoke(result: Result<T>): T
+}

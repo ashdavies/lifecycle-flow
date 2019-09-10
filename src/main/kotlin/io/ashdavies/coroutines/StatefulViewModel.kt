@@ -1,6 +1,8 @@
 package io.ashdavies.coroutines
 
+import androidx.lifecycle.ViewModel
 import io.ashdavies.annotation.ExperimentalLifecycleApi
+import io.ashdavies.architecture.Action
 import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
 import io.ashdavies.architecture.State
@@ -20,7 +22,7 @@ abstract class StatefulViewModel<S : State, T : Signal>(
     reducer: StateReducer<S, T>
 ) : SignalStore<T> by SignalDispatcher(),
     StateMachine<S> by StateMachinery(initial),
-    ScopedViewModel() {
+    ViewModel() {
 
   private val _reducer: StateReducer<S, T> = reducer
 
@@ -28,9 +30,11 @@ abstract class StatefulViewModel<S : State, T : Signal>(
     mediatorLiveData(signals, object : Operator<Event<T>, S> {
       override fun invoke(scope: LiveDataScope<S>, value: Event<T>) {
         ImmediateScope.launch {
-          action {
-            _reducer(it.getOrThrow(), value.peek())
-          }
+          action(object : Action<S> {
+            override suspend fun invoke(result: Result<S>): S {
+              return _reducer(result.getOrThrow(), value.peek())
+            }
+          })
         }
       }
     })
@@ -38,9 +42,11 @@ abstract class StatefulViewModel<S : State, T : Signal>(
 
   fun reduce(signal: T) {
     ImmediateScope.launch {
-      action {
-        _reducer(it.getOrThrow(), signal)
-      }
+      action(object : Action<S> {
+        override suspend fun invoke(result: Result<S>): S {
+          return _reducer(result.getOrThrow(), signal)
+        }
+      })
     }
   }
 }
