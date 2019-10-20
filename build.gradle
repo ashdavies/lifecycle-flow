@@ -19,8 +19,6 @@ apply(plugin: "com.android.library")
 apply(plugin: "kotlin-android")
 apply(plugin: "kotlin-kapt")
 
-apply(from: file("gradle/git-release-notes.gradle"))
-apply(from: file("gradle/gradle-mvn-push.gradle"))
 apply(from: file("repositories.gradle.kts"))
 
 apply(plugin: "de.mannodermaus.android-junit5")
