@@ -62,7 +62,9 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2")
 
-  testImplementation("com.github.ashdavies:lifecycle-testing:0.4.3")
+  testImplementation("com.github.ashdavies.lifecycle-testing:jupiter:0.5.2")
+  testImplementation("com.github.ashdavies.lifecycle-testing:testing:0.5.2")
+  testImplementation("com.github.ashdavies.lifecycle-testing:truth:0.5.2")
   testImplementation("com.google.truth:truth:1.0")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2")
   testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")

@@ -2,7 +2,7 @@ package io.ashdavies.signal
 
 import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
-import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.jupiter.InstantTaskExecutorExtension
 import io.ashdavies.lifecycle.testing.TestObserver
 import io.ashdavies.lifecycle.testing.test
 import org.junit.jupiter.api.Test

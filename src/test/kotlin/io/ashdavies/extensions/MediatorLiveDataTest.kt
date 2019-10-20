@@ -3,7 +3,7 @@ package io.ashdavies.extensions
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.ashdavies.lifecycle.LiveDataScope
-import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.jupiter.InstantTaskExecutorExtension
 import io.ashdavies.lifecycle.testing.TestObserver
 import io.ashdavies.lifecycle.testing.test
 import io.ashdavies.operator.Operator
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 internal class MediatorLiveDataTest {
 
   @Test
-  fun `should passthrough values`() {
+  fun `should pass through values`() {
     val source: MutableLiveData<Int> = MutableLiveData()
     val mediated: LiveData<Int> = mediatorLiveData(source, PassthroughOperator)
     val observer: TestObserver<Int> = mediated.test()

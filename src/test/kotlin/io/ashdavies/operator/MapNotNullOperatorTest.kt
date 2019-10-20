@@ -1,6 +1,6 @@
 package io.ashdavies.operator
 
-import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.jupiter.InstantTaskExecutorExtension
 import io.ashdavies.testing.TestLiveDataScope
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Disabled

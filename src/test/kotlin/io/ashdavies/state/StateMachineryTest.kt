@@ -2,21 +2,16 @@ package io.ashdavies.state
 
 import io.ashdavies.annotation.ExperimentalLifecycleApi
 import io.ashdavies.architecture.Action
-import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.jupiter.InstantTaskExecutorExtension
 import io.ashdavies.lifecycle.testing.TestObserver
-import io.ashdavies.lifecycle.testing.UnconfinedDispatcherExtension
 import io.ashdavies.lifecycle.testing.test
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.jupiter.api.extension.Extensions
 import kotlin.LazyThreadSafetyMode.NONE
 
-@Extensions(
-    ExtendWith(InstantTaskExecutorExtension::class),
-    ExtendWith(UnconfinedDispatcherExtension::class)
-)
 @ExperimentalLifecycleApi
+@ExtendWith(InstantTaskExecutorExtension::class)
 internal class StateMachineryTest {
 
   private val machine: StateMachine<State> by lazy<StateMachine<State>>(NONE) { StateMachinery(State.Started) }

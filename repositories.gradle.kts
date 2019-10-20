@@ -21,7 +21,7 @@ repositories {
 
   maven("https://jitpack.io") {
     content {
-      includeGroup("com.github.ashdavies")
+      includeGroupByRegex("com\\.github\\.ashdavies.*")
     }
   }
 
