@@ -1,7 +1,6 @@
 package io.ashdavies.operator
 
-import io.ashdavies.extensions.invoke
-import io.ashdavies.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
 import io.ashdavies.testing.TestLiveDataScope
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,7 +13,9 @@ internal class DistinctOperatorTest {
 
   @Test
   fun `should filter non distinct elements`() {
-    operator(scope, 1, 1, 2)
+    operator(scope, 1)
+    operator(scope, 2)
+    operator(scope, 3)
 
     scope.expect(1, 2)
   }

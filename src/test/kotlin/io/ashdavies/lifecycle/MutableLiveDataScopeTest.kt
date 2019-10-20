@@ -2,9 +2,9 @@ package io.ashdavies.lifecycle
 
 import androidx.lifecycle.MutableLiveData
 import io.ashdavies.extensions.mutableLiveData
-import io.ashdavies.testing.InstantTaskExecutorExtension
-import io.ashdavies.testing.TestObserver
-import io.ashdavies.testing.test
+import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.testing.TestObserver
+import io.ashdavies.lifecycle.testing.test
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 

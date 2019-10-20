@@ -3,10 +3,10 @@ package io.ashdavies.extensions
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.ashdavies.lifecycle.LiveDataScope
+import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.testing.TestObserver
+import io.ashdavies.lifecycle.testing.test
 import io.ashdavies.operator.Operator
-import io.ashdavies.testing.InstantTaskExecutorExtension
-import io.ashdavies.testing.TestObserver
-import io.ashdavies.testing.test
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 

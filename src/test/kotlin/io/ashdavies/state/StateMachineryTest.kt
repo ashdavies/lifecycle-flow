@@ -1,10 +1,11 @@
 package io.ashdavies.state
 
 import io.ashdavies.annotation.ExperimentalLifecycleApi
-import io.ashdavies.testing.InstantTaskExecutorExtension
-import io.ashdavies.testing.TestObserver
-import io.ashdavies.testing.UnconfinedDispatcherExtension
-import io.ashdavies.testing.test
+import io.ashdavies.architecture.Action
+import io.ashdavies.lifecycle.testing.InstantTaskExecutorExtension
+import io.ashdavies.lifecycle.testing.TestObserver
+import io.ashdavies.lifecycle.testing.UnconfinedDispatcherExtension
+import io.ashdavies.lifecycle.testing.test
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -91,4 +92,8 @@ internal class StateMachineryTest {
     object Started : State()
     object Finished : State()
   }
+
+  private suspend fun <T> StateMachine<T>.action(block: (Result<T>) -> T) = action(object : Action<T> {
+    override suspend fun invoke(result: Result<T>): T = block(result)
+  })
 }
