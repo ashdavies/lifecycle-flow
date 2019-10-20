@@ -4,12 +4,13 @@ import io.ashdavies.lifecycle.jupiter.InstantTaskExecutorExtension
 import io.ashdavies.testing.TestLiveDataScope
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import kotlin.LazyThreadSafetyMode.NONE
 
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class MapInstanceOperatorTest {
 
+  private val scope: TestLiveDataScope<String> by lazy(NONE) { TestLiveDataScope<String>() }
   private val operator = MapInstanceOperator<Any, String>(String::class.java)
-  private val scope = TestLiveDataScope<String>()
 
   @Test
   fun `should map string value`() {

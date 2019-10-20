@@ -5,11 +5,12 @@ import io.ashdavies.testing.TestLiveDataScope
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import kotlin.LazyThreadSafetyMode.NONE
 
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class FilterOperatorTest {
 
-  private val scope = TestLiveDataScope<Int>()
+  private val scope: TestLiveDataScope<Int> by lazy(NONE) { TestLiveDataScope<Int>() }
 
   @Test
   fun `should filter value`() = runBlocking<Unit> {
