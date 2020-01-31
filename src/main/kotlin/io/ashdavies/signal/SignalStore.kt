@@ -1,12 +1,11 @@
 package io.ashdavies.signal
 
-import androidx.lifecycle.LiveData
-import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
+import kotlinx.coroutines.flow.Flow
 
 interface SignalStore<T : Signal> {
 
-  val signals: LiveData<Event<T>>
+  val signals: Flow<T>
 
-  fun signal(signal: T)
+  suspend fun signal(signal: T)
 }

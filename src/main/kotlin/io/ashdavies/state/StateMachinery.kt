@@ -1,34 +1,37 @@
 package io.ashdavies.state
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import io.ashdavies.annotation.ExperimentalLifecycleApi
 import io.ashdavies.architecture.Action
-import io.ashdavies.extensions.mutableLiveData
-import io.ashdavies.extensions.requireValue
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.Channel.Factory.CONFLATED
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.consumeAsFlow
 
+@FlowPreview
 @ExperimentalLifecycleApi
 class StateMachinery<T>(initial: T) : StateMachine<T> {
 
-  private val _state: MutableLiveData<Result<T>> = mutableLiveData()
-  override val state: LiveData<Result<T>> = _state
+  private val _state: Channel<Result<T>> = Channel(CONFLATED)
+  override val state: Flow<Result<T>> = _state.consumeAsFlow()
 
-  private val _loading: MutableLiveData<Boolean> = mutableLiveData(false)
-  override val loading: LiveData<Boolean> = _loading
+  private val _loading: Channel<Boolean> = Channel(CONFLATED)
+  override val loading: Flow<Boolean> = _loading.consumeAsFlow()
 
   init {
-    _state.value = Result.success(initial)
+    _state.offer(Result.success(initial))
+    _loading.offer(false)
   }
 
   override suspend fun action(action: Action<T>) = runLoading {
     runCatching {
-      action(_state.requireValue())
+      action(_state.receive())
     }
   }
 
-  private inline fun <S> S.runLoading(block: S.() -> Result<T>) {
-    _loading.value = true
-    _state.value = block()
-    _loading.value = false
+  private suspend inline fun <S> S.runLoading(block: S.() -> Result<T>) {
+    _loading.send(true)
+    _state.send(block())
+    _loading.send(false)
   }
 }

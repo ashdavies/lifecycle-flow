@@ -1,20 +1,23 @@
 package io.ashdavies.signal
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
-import io.ashdavies.extensions.mutableLiveData
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.Channel.Factory.CONFLATED
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.consumeAsFlow
 
-class SignalDispatcher<T : Signal> private constructor(private val _signals: MutableLiveData<Event<T>>) : SignalStore<T> {
+@FlowPreview
+class SignalDispatcher<T : Signal> : SignalStore<T> {
 
-  constructor(value: T) : this(mutableLiveData(Event(value)))
+  private val _signals: Channel<T> = Channel(CONFLATED)
+  override val signals: Flow<T> = _signals.consumeAsFlow()
 
-  constructor() : this(mutableLiveData())
+  constructor(value: T) {
+    _signals.offer(value)
+  }
 
-  override val signals: LiveData<Event<T>> = _signals
-
-  override fun signal(signal: T) {
-    _signals.value = Event(signal)
+  override suspend fun signal(signal: T) {
+    _signals.offer(signal)
   }
 }

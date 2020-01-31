@@ -1,12 +1,12 @@
 package io.ashdavies.state
 
-import androidx.lifecycle.LiveData
 import io.ashdavies.annotation.ExperimentalLifecycleApi
+import kotlinx.coroutines.flow.Flow
 
 @ExperimentalLifecycleApi
 interface StateExposition<T> {
 
-  val state: LiveData<Result<T>>
+  val state: Flow<Result<T>>
 
-  val loading: LiveData<Boolean>
+  val loading: Flow<Boolean>
 }
