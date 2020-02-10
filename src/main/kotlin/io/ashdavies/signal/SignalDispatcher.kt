@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.consumeAsFlow
 
 @FlowPreview
-class SignalDispatcher<T : Signal> : SignalStore<T> {
+class SignalDispatcher<T : Signal>(value: T) : SignalStore<T> {
 
   private val _signals: Channel<T> = Channel(CONFLATED)
   override val signals: Flow<T> = _signals.consumeAsFlow()
 
-  constructor(value: T) {
+  init {
     _signals.offer(value)
   }
 

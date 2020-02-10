@@ -1,52 +1,39 @@
 package io.ashdavies.coroutines
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import io.ashdavies.annotation.ExperimentalLifecycleApi
 import io.ashdavies.architecture.Action
-import io.ashdavies.architecture.Event
 import io.ashdavies.architecture.Signal
 import io.ashdavies.architecture.State
-import io.ashdavies.extensions.mediatorLiveData
-import io.ashdavies.lifecycle.LiveDataScope
-import io.ashdavies.operator.Operator
 import io.ashdavies.signal.SignalDispatcher
 import io.ashdavies.signal.SignalStore
 import io.ashdavies.state.StateMachine
 import io.ashdavies.state.StateMachinery
 import io.ashdavies.state.StateReducer
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@FlowPreview
 @ExperimentalLifecycleApi
 abstract class StatefulViewModel<S : State, T : Signal>(
-    initial: S,
+    state: S,
+    signal: T,
     reducer: StateReducer<S, T>
-) : SignalStore<T> by SignalDispatcher(),
-    StateMachine<S> by StateMachinery(initial),
+) : SignalStore<T> by SignalDispatcher(signal),
+    StateMachine<S> by StateMachinery(state),
     ViewModel() {
 
-  private val _reducer: StateReducer<S, T> = reducer
-
   init {
-    mediatorLiveData(signals, object : Operator<Event<T>, S> {
-      override fun invoke(scope: LiveDataScope<S>, value: Event<T>) {
-        ImmediateScope.launch {
-          action(object : Action<S> {
-            override suspend fun invoke(result: Result<S>): S {
-              return _reducer(result.getOrThrow(), value.peek())
-            }
-          })
-        }
+    viewModelScope.launch {
+      signals.collect { signal ->
+        action(object : Action<S> {
+          override suspend fun invoke(result: Result<S>): S {
+            return reducer(result.getOrThrow(), signal)
+          }
+        })
       }
-    })
-  }
-
-  fun reduce(signal: T) {
-    ImmediateScope.launch {
-      action(object : Action<S> {
-        override suspend fun invoke(result: Result<S>): S {
-          return _reducer(result.getOrThrow(), signal)
-        }
-      })
     }
   }
 }
