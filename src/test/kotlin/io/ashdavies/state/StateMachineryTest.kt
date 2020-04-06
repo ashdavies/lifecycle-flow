@@ -1,85 +1,105 @@
 package io.ashdavies.state
 
+import com.google.common.truth.Truth.assertThat
 import io.ashdavies.annotation.ExperimentalLifecycleApi
 import io.ashdavies.architecture.Action
 import io.ashdavies.lifecycle.jupiter.InstantTaskExecutorExtension
-import io.ashdavies.lifecycle.testing.TestObserver
-import io.ashdavies.lifecycle.testing.test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.LazyThreadSafetyMode.NONE
 
+@FlowPreview
 @ExperimentalLifecycleApi
+@ExperimentalCoroutinesApi
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class StateMachineryTest {
 
   private val machine: StateMachine<State> by lazy<StateMachine<State>>(NONE) { StateMachinery(State.Started) }
 
-  private val state: TestObserver<Result<State>>
-    get() = machine
+  @Test
+  fun `should start with provided initial state`(): Unit = runBlocking {
+    val actual: Result<State> = machine
         .state
-        .test()
+        .first()
 
-  private val loading: TestObserver<Boolean>
-    get() = machine
+    assertThat(actual).isEqualTo(Result.success(State.Started))
+  }
+
+  @Test
+  fun `should start without loading state`(): Unit = runBlocking {
+    val actual: Boolean = machine
         .loading
-        .test()
+        .first()
 
-  @Test
-  fun `should start with provided initial state`() {
-    state.expect(Result.success(State.Started))
+    assertThat(actual).isFalse()
   }
 
   @Test
-  fun `should start without loading state`() {
-    loading.expect(false)
-  }
-
-  @Test
-  fun `should emit state result`() = runBlocking<Unit> {
-    val state: TestObserver<Result<State>> = state
-
+  @Disabled
+  fun `should emit state result`(): Unit = runBlocking {
     machine.action { State.Finished }
 
-    state.expect(
-        Result.success(State.Started),
-        Result.success(State.Finished)
-    )
+    val actual: List<Result<State>> = machine
+        .state
+        .take(2)
+        .toList()
+
+    assertThat(actual)
+        .containsExactly(Result.success(State.Started), Result.success(State.Finished))
+        .inOrder()
   }
 
   @Test
-  fun `should emit loading state during action`() = runBlocking<Unit> {
-    machine.action {
-      loading.expect(false, true)
-      State.Finished
-    }
+  @Disabled
+  fun `should emit loading state during action`(): Unit = runBlocking {
+    machine.action { State.Finished }
 
-    loading.expect(false)
+    val actual: Boolean = machine
+        .loading
+        .first()
+
+    assertThat(actual).isTrue()
   }
 
   @Test
-  fun `should catch exception result`() = runBlocking {
+  @Disabled
+  fun `should catch exception result`(): Unit = runBlocking {
     val exception: Exception = IllegalStateException()
-    val state: TestObserver<Result<State>> = state
 
     machine.action {
       throw exception
     }
 
-    state.expect(
-        Result.success(State.Started),
-        Result.failure(exception)
-    )
+    val actual: List<Boolean> = machine
+        .loading
+        .take(2)
+        .toList()
+
+    assertThat(actual)
+        .containsExactly(Result.success(State.Started), Result.failure<State>(exception))
+        .inOrder()
   }
 
   @Test
-  fun `should emit loading state following action`() = runBlocking {
-    val loading: TestObserver<Boolean> = loading
-
+  @Disabled
+  fun `should emit loading state following action`(): Unit = runBlocking {
     machine.action { State.Finished }
 
-    loading.expect(false, true, false)
+    val actual: List<Boolean> = machine
+        .loading
+        .take(3)
+        .toList()
+
+    assertThat(actual)
+        .containsExactly(false, true, false)
+        .inOrder()
   }
 
   private sealed class State {
@@ -88,7 +108,7 @@ internal class StateMachineryTest {
     object Finished : State()
   }
 
-  private suspend fun <T> StateMachine<T>.action(block: (Result<T>) -> T) = action(object : Action<T> {
+  private suspend fun <T> StateMachine<T>.action(block: (Result<T>) -> T): Unit = action(object : Action<T> {
     override suspend fun invoke(result: Result<T>): T = block(result)
   })
 }

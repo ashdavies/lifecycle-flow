@@ -22,11 +22,9 @@ internal class FragmentTest {
   fun `should throw exception`() {
     val fragment: Fragment = FakeFragment(null)
 
-    val thrown: IllegalStateException = assertThrows {
+    assertThrows<IllegalStateException> {
       fragment.requireView()
     }
-
-    assertThat(thrown.message).isEqualTo("Fragment $fragment has no layout")
   }
 
   private class FakeActivity : Activity()

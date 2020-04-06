@@ -1,28 +1,35 @@
 package io.ashdavies.signal
 
-import io.ashdavies.architecture.Event
+import com.google.common.truth.Truth.assertThat
 import io.ashdavies.architecture.Signal
 import io.ashdavies.lifecycle.jupiter.InstantTaskExecutorExtension
-import io.ashdavies.lifecycle.testing.TestObserver
-import io.ashdavies.lifecycle.testing.test
+import io.ashdavies.signal.SignalDispatcherTest.TestSignal.Started
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @ExtendWith(InstantTaskExecutorExtension::class)
 internal class SignalDispatcherTest {
 
-  private val store: SignalStore<TestSignal> = SignalDispatcher()
+  private val store: SignalStore<TestSignal> = SignalDispatcher(Started)
 
   @Test
-  fun `should emit signal`() {
-    val observer: TestObserver<Event<TestSignal>> = store
+  fun `should emit signal`(): Unit = runBlockingTest {
+    val signal: TestSignal = store
         .signals
-        .test()
+        .first()
 
-    store.signal(TestSignal)
-
-    observer.expect(Event(TestSignal))
+    assertThat(signal).isEqualTo(Started)
   }
 
-  private object TestSignal : Signal
+  private sealed class TestSignal : Signal {
+
+    object Started : TestSignal()
+    object Finished : TestSignal()
+  }
 }
