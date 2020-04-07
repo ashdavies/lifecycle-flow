@@ -6,6 +6,8 @@ plugins {
 
   kotlin("android") version "1.3.70"
   kotlin("kapt") version "1.3.70"
+
+  `maven-publish`
 }
 
 android {
